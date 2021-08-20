@@ -44,19 +44,6 @@ public class ReactiveStreamsLab {
   }
 
   @Test
-  void combiningObservables() {
-    final var firstSource = List.of("a", "b", "c");
-    final var secondSource = List.of("1", "2", "3");
-    final var firstObservable = Observable.fromIterable(firstSource);
-    final var secondObservable = Observable.fromIterable(secondSource);
-    final var stringBuilder = new StringBuilder();
-
-    firstObservable.flatMap(event -> secondObservable).subscribe(stringBuilder::append);
-
-    assertEquals("123123123", stringBuilder.toString());
-  }
-
-  @Test
   void scanningObservables() {
     final var source = List.of("1", "2", "3", "4");
     final var observable = Observable.fromIterable(source);
