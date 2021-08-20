@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.jupiter.api.Test;
 
-public class ReactiveDataSourceTest {
+public class ReactiveStreamsLab {
 
   @Test
   void justEmmitOneValue() {
@@ -70,8 +70,8 @@ public class ReactiveDataSourceTest {
   void groupingByEvents() {
     final var source = List.of(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
     final var observable = Observable.fromIterable(source);
-    int[] EVEN = {0};
-    int[] ODD = {0};
+    int[] PAR = {0};
+    int[] IMPAR = {0};
 
     observable
         .groupBy(value -> value % 2 == 0 ? "EVEN" : "ODD")
@@ -81,11 +81,11 @@ public class ReactiveDataSourceTest {
                     value ->
                         Optional.of(groupedObservable.getKey().equals("EVEN"))
                             .filter(isEven -> isEven)
-                            .map(even -> EVEN[0] += value)
-                            .orElseGet(() -> ODD[0] += value)));
+                            .map(even -> PAR[0] += value)
+                            .orElseGet(() -> IMPAR[0] += value)));
 
-    assertEquals(30, EVEN[0]);
-    assertEquals(25, ODD[0]);
+    assertEquals(30, PAR[0]);
+    assertEquals(25, IMPAR[0]);
   }
 
   @Test
