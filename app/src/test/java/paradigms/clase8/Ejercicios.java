@@ -80,18 +80,10 @@ public class Ejercicios {
     @Test
     void emiteElementosHastaQueEncuentresUnElementoImpar() {
         final var source = Observable.fromIterable(List.of(8, 2, 3, 4, 6, 6));
-        source
-                .groupBy(value -> value % 2 == 0 ? "PAR" : "IMPAR")
-                .subscribe(
-                        groupedObservable ->
-                                groupedObservable.subscribe(
-                                        value ->
-                                                Optional.of(groupedObservable.getKey().equals("PAR"))
-                                                        .filter(isEven -> isEven)
-                                                        .map(even -> Observable.just(value).subscribe(System.out::println))
-                                                        .orElseThrow(() ->
-                new IllegalArgumentException("Encontramos un valor impar: " + value + " --- Cortamos la ejecución")),
-                                        Throwable::printStackTrace));
+        source.subscribe(n -> Optional.of(n).filter(m -> {
+            System.out.println(m);
+            return m % 2 == 0;
+        }).orElseThrow(Exception::new), Throwable::printStackTrace);
 
     }
 }
