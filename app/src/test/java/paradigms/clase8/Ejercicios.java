@@ -79,11 +79,14 @@ public class Ejercicios {
      */
     @Test
     void emiteElementosHastaQueEncuentresUnElementoImpar() {
-        final var source = Observable.fromIterable(List.of(8, 2, 3, 4, 6, 6));
-        source.subscribe(n -> Optional.of(n).filter(m -> {
-            System.out.println(m);
-            return m % 2 == 0;
-        }).orElseThrow(Exception::new), Throwable::printStackTrace);
-
+        final var source = Observable.fromIterable(List.of(8, 2, 3, 4, 5, 6));
+        source.doOnNext(elem -> {
+            if(elem % 2 != 0){
+                throw new RuntimeException("Se encontró un numero impar, abortar");
+            }
+        }).subscribe(
+                System.out::println,
+                Throwable::printStackTrace
+        );
     }
 }
